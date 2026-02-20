@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+{% extends 'dashboard.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Add Products</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form method="post" action="{% url 'update_products' product_id=data.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card-body">
+            <div class="form-group">
+                <label for="categorySelect">Category Name</label>
+               <select class="form-control" id="categorySelect" name="categoryname">
+                        <option value="">Select Category</option>
+
+                        {% for i in categories %}
+                        <option value="{{ i.CategoryName }}"
+                                {% if i.CategoryName == data.Category_Name %}
+                                selected
+                                {% endif %}
+                        >
+                            {{ i.CategoryName }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+
+            </div>
+            <div class="form-group">
+                <label for="exampleInput2">Product Name</label>
+                <input type="text" class="form-control" id="exampleInput2" placeholder="Product Name" name="productname"
+                       value="{{data.ProductName}}">
+            </div>
+            <div class="form-group">
+                <label for="exampleInput3">Price </label>
+                <input type="number" class="form-control" id="exampleInput3" placeholder="Price " name="price"
+                       value={{data.Price}}>
+            </div>
+            <div class="form-group">
+                <label for="exampleTextarea1">Description</label>
+                <textarea class="form-control" id="exampleTextarea1" rows="4"
+                          name="description">{{data.Description}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputFile">Product Image</label>
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="exampleInputFile" name="productimage">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    </div>
+
+
+                </div>
+                {% if data.ProductImage %}
+                <div class="mt-2">
+                    <img src="{{ data.ProductImage.url }}" width="120" class="img-thumbnail">
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary" fdprocessedid="6w4ajj">Submit</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+{% endblock %}
