@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.template.context_processors import request
 
 from AdminApp.models import *
-from UserApp.models import ContactDb
+from UserApp.models import ContactDb, RegistrationDb
 
 
 # Create your views here.
@@ -49,4 +49,40 @@ def save_contacts(request):
             return redirect('contacts')
         else:
             return redirect('contacts')
+def user_signin(request):
+    return render(request,'signin.html')
+def user_signup(request):
+    return render(request,'signup.html')
+def save_signup(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm_password')
+        obj = RegistrationDb(UserName=name,Email=email,Password=password,Confirm_Password=confirm_password)
+        if RegistrationDb.objects.filter(UserName=name).exists():
+            print("User already exists")
+            return redirect('user_signup')
+        elif RegistrationDb.objects.filter(UserName=email).exists():
+            print("User already exists")
+            return redirect('user_signup')
+        else:
+            obj.save()
+            return redirect('user_signin')
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        if RegistrationDb.objects.filter(UserName=username,Password=password).exists():
+            request.session['username'] = username
+            request.session['password'] = password
+            return redirect('Home')
+        else:
+            return redirect('user_signin')
+    else:
+        return redirect('user_signin')
 
+def user_logout(request):
+    del request.session['username']
+    del request.session['password']
+    return redirect('Home')
