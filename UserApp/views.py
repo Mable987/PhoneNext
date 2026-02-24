@@ -30,7 +30,8 @@ def filtered_products(request,cat_name):
 def single_product(request,product_id):
     single_product = ProductDb.objects.get(id=product_id)
     categories = CategoryDb.objects.all()
-    return render(request,'single_item.html',{'single_product':single_product,'categories':categories})
+    related_products = ProductDb.objects.all()
+    return render(request,'single_item.html',{'single_product':single_product,'categories':categories,'related_products':related_products})
 def contact_page(request):
     return render(request,'contact_page.html')
 def save_contacts(request):
