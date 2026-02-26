@@ -34,7 +34,7 @@
                 <p>Welcome to EasyGrocery</p>
             </div>
 
-            <form class="harmony-form" id="loginForm" novalidate method="POST" action="{% url 'user_login' %}">
+            <form class="harmony-form" id="loginForm" novalidate method="POST" action="{% url 'login' %}">
                 {% csrf_token %}
                 <div class="organic-field">
                     <div class="field-nature"></div>
@@ -91,7 +91,7 @@
 
             <div class="nurture-signup">
                 <span>New to PhoneNext? </span>
-                <a href="{% url 'user_sign_up' %}" class="growth-link">Signup</a>
+                <a href="{% url 'signup' %}" class="growth-link">Signup</a>
             </div>
 
             <div class="harmony-success" id="successMessage">

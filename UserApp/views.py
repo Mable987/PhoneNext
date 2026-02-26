@@ -55,20 +55,20 @@ def user_signup(request):
     return render(request,'signup.html')
 def save_signup(request):
     if request.method == 'POST':
-        name = request.POST.get('name')
+        username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
-        obj = RegistrationDb(UserName=name,Email=email,Password=password,Confirm_Password=confirm_password)
-        if RegistrationDb.objects.filter(UserName=name).exists():
+        obj = RegistrationDb(UserName=username,Email=email,Password=password,Confirm_Password=confirm_password)
+        if RegistrationDb.objects.filter(UserName=username).exists():
             print("User already exists")
-            return redirect('user_signup')
-        elif RegistrationDb.objects.filter(UserName=email).exists():
+            return redirect('signup')
+        elif RegistrationDb.objects.filter(Email=email).exists():
             print("User already exists")
-            return redirect('user_signup')
+            return redirect('signup')
         else:
             obj.save()
-            return redirect('user_signin')
+            return redirect('signin')
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -76,13 +76,13 @@ def user_login(request):
         if RegistrationDb.objects.filter(UserName=username,Password=password).exists():
             request.session['username'] = username
             request.session['password'] = password
-            return redirect('Home')
+            return redirect('home')
         else:
-            return redirect('user_signin')
+            return redirect('signin')
     else:
-        return redirect('user_signin')
+        return redirect('signin')
 
 def user_logout(request):
     del request.session['username']
     del request.session['password']
-    return redirect('Home')
+    return redirect('home')
