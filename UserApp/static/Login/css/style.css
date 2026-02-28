@@ -168,7 +168,7 @@ body {
 /* Organic Form Fields */
 .organic-field {
     position: relative;
-    margin-bottom: 32px;
+    margin-bottom: 50px;  /* increase spacing */
 }
 
 .field-nature {
@@ -701,6 +701,18 @@ body {
     top: 0;
     left: 0;
     animation-delay: 0.4s;
+}
+.error-message {
+    color: #ff4d4d;
+    font-size: 13px;
+    position: absolute;
+    bottom: -20px;
+    left: 20px;
+    display: none;
+}
+
+.error-message.show {
+    display: block;
 }
 
 @keyframes mandalaGrow {

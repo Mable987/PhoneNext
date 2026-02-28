@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
 from django.template.context_processors import request
-
+from django.contrib import messages
 from AdminApp.models import *
-from UserApp.models import ContactDb, RegistrationDb
+from UserApp.models import ContactDb, RegistrationDb, CratDb
 
 
 # Create your views here.
 def Home(request):
     categories = CategoryDb.objects.all()
     latest_products = ProductDb.objects.all().order_by('-id')[:8]
+
     return render(request,'Home.html',{'categories':categories,'latest_products':latest_products})
 def about(request):
     return render(request,'about.html')
@@ -68,6 +69,7 @@ def save_signup(request):
             return redirect('signup')
         else:
             obj.save()
+            messages.success(request,'Registration successful')
             return redirect('signin')
 def user_login(request):
     if request.method == 'POST':
@@ -86,3 +88,17 @@ def user_logout(request):
     del request.session['username']
     del request.session['password']
     return redirect('home')
+def cart(request):
+    return render(request,'cart.html')
+def add_to_cart(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        productname = request.POST.get('productname')
+        quantity = request.POST.get('quantity')
+        price = request.POST.get('price')
+        totalprice = request.POST.get('totalprice')
+        pro = ProductDb.objects.filter(ProductName=productname).first()
+        img = pro.ProductImage if pro else None
+        obj = CratDb(UserName=username,ProductName=productname,Quantity=quantity,Price=price,TotalPrice=totalprice,ProductImage=img)
+        obj.save()
+        return redirect('cart')

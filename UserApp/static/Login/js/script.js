@@ -2,9 +2,11 @@
 class EcoWellnessLoginForm {
     constructor() {
         this.form = document.getElementById('loginForm');
+        this.usernameInput = document.getElementById('username');
         this.emailInput = document.getElementById('email');
-        this.passwordInput = document.getElementById('password');
+        this.passwordInput = document.getElementById('password1');
         this.passwordToggle = document.getElementById('passwordToggle');
+        this.confirmPasswordInput = document.getElementById('password2');
         this.submitButton = this.form.querySelector('.harmony-button');
         this.successMessage = document.getElementById('successMessage');
         this.socialButtons = document.querySelectorAll('.earth-social');
@@ -25,6 +27,7 @@ class EcoWellnessLoginForm {
         this.passwordInput.addEventListener('blur', () => this.validatePassword());
         this.emailInput.addEventListener('input', () => this.clearError('email'));
         this.passwordInput.addEventListener('input', () => this.clearError('password'));
+        this.usernameInput.addEventListener('input', () => this.clearError('username'));
         
         // Add placeholder for label animations
         this.emailInput.setAttribute('placeholder', ' ');
@@ -74,23 +77,23 @@ class EcoWellnessLoginForm {
         fieldNature.style.animation = '';
     }
     
-    validateEmail() {
-        const email = this.emailInput.value.trim();
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        
-        if (!email) {
-            this.showError('email', 'Your username helps us connect with you mindfully');
-            return false;
-        }
-        
-        if (!emailRegex.test(email)) {
-            this.showError('username', 'Please share a valid email address');
-            return false;
-        }
-        
-        this.clearError('username');
-        return true;
+   validateEmail() {
+    const email = this.emailInput.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email) {
+        this.showError('email', 'Email is required');
+        return false;
     }
+
+    if (!emailRegex.test(email)) {
+        this.showError('email', 'Please enter a valid email');
+        return false;
+    }
+
+    this.clearError('email');
+    return true;
+}
     
     validatePassword() {
         const password = this.passwordInput.value;
@@ -108,7 +111,23 @@ class EcoWellnessLoginForm {
         this.clearError('password');
         return true;
     }
-    
+    validateConfirmPassword() {
+    const password = this.passwordInput.value;
+    const confirmPassword = this.confirmPasswordInput.value;
+
+    if (!confirmPassword) {
+        this.showError('confirm_password', 'Please confirm your password');
+        return false;
+    }
+
+    if (password !== confirmPassword) {
+        this.showError('confirm_password', 'Passwords do not match');
+        return false;
+    }
+
+    this.clearError('confirm_password');
+    return true;
+}
     showError(field, message) {
         const organicField = document.getElementById(field).closest('.organic-field');
         const errorElement = document.getElementById(`${field}Error`);
@@ -129,30 +148,44 @@ class EcoWellnessLoginForm {
         }, 300);
     }
     
-    async handleSubmit(e) {
-        e.preventDefault();
-        
-        const isEmailValid = this.validateEmail();
-        const isPasswordValid = this.validatePassword();
-        
-        if (!isEmailValid || !isPasswordValid) {
-            return;
-        }
-        
-        this.setLoading(true);
-        
-        try {
-            // Simulate mindful authentication process
-            await new Promise(resolve => setTimeout(resolve, 2800));
-            
-            // Show harmony success
-            this.showHarmonySuccess();
-        } catch (error) {
-            this.showError('password', 'Connection to sanctuary was interrupted. Please try again.');
-        } finally {
-            this.setLoading(false);
-        }
+ async handleSubmit(e) {
+    e.preventDefault();
+
+   const isUsernameValid = this.validateUsername();
+const isEmailValid = this.validateEmail();
+const isPasswordValid = this.validatePassword();
+const isConfirmPasswordValid = this.validateConfirmPassword();
+
+
+if (!isUsernameValid || !isEmailValid ||
+    !isPasswordValid || !isConfirmPasswordValid) {
+    return;
+}
+
+    this.setLoading(true);
+
+    try {
+        await new Promise(resolve => setTimeout(resolve, 2800));
+        this.showHarmonySuccess();
+    } catch (error) {
+        this.showError('password', 'Connection interrupted. Please try again.');
+    } finally {
+        this.setLoading(false);
     }
+}
+
+    validateUsername() {
+    const usernameInput = document.getElementById("username");
+    const username = usernameInput.value.trim();
+
+    if (!username) {
+        this.showError("username", "Username is required");
+        return false;
+    }
+
+    this.clearError("username");
+    return true;
+}
     
     async handleSocialLogin(provider, button) {
         console.log(`Connecting with ${provider} mindfully...`);
@@ -240,3 +273,4 @@ if (!document.querySelector('#wellness-keyframes')) {
 document.addEventListener('DOMContentLoaded', () => {
     new EcoWellnessLoginForm();
 });
+

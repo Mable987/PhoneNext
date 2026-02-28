@@ -45,103 +45,80 @@
     <!-- Spinner End -->
 
 
-    <!-- Topbar Start -->
-    <div class="container-fluid px-5 d-none border-bottom d-lg-block">
-        <div class="row gx-0 align-items-center">
-            <div class="col-lg-4 text-center text-lg-start mb-lg-0">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <a href="#" class="text-muted me-2"> Help</a><small> / </small>
-                    <a href="#" class="text-muted mx-2"> Support</a><small> / </small>
-                    <a href="#" class="text-muted ms-2"> Contact</a>
-                </div>
-            </div>
-            <div class="col-lg-4 text-center d-flex align-items-center justify-content-center">
-                <small class="text-dark">Call Us:</small>
-                <a href="#" class="text-muted">(+012) 1234 567890</a>
-            </div>
+<!-- Topbar Start -->
 
-            <div class="col-lg-4 text-center text-lg-end">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <div class="dropdown">
-                        <a href="#" class="dropdown-toggle text-muted me-2" data-bs-toggle="dropdown"><small>
-                                USD</small></a>
-                        <div class="dropdown-menu rounded">
-                            <a href="#" class="dropdown-item"> Euro</a>
-                            <a href="#" class="dropdown-item"> Dolar</a>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <a href="#" class="dropdown-toggle text-muted mx-2" data-bs-toggle="dropdown"><small>
-                                English</small></a>
-                        <div class="dropdown-menu rounded">
-                            <a href="#" class="dropdown-item"> English</a>
-                            <a href="#" class="dropdown-item"> Turkish</a>
-                            <a href="#" class="dropdown-item"> Spanol</a>
-                            <a href="#" class="dropdown-item"> Italiano</a>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <a href="#" class="dropdown-toggle text-muted ms-2" data-bs-toggle="dropdown"><small><i
-                                    class="fa fa-home me-2"></i> My Dashboard</small></a>
-                        <div class="dropdown-menu rounded">
-                            <a href="#" class="dropdown-item"> Login</a>
-                            <a href="#" class="dropdown-item"> Wishlist</a>
-                            <a href="#" class="dropdown-item"> My Card</a>
-                            <a href="#" class="dropdown-item"> Notifications</a>
-                            <a href="#" class="dropdown-item"> Account Settings</a>
-                            <a href="#" class="dropdown-item"> My Account</a>
-                            <a href="#" class="dropdown-item"> Log Out</a>
-                        </div>
-                    </div>
+<div class="container-fluid px-5 py-4 d-none d-lg-block">
+    <div class="row gx-0 align-items-center text-center">
+        <div class="col-md-4 col-lg-3 text-center text-lg-start">
+            <div class="d-inline-flex align-items-center">
+                <a href="" class="navbar-brand p-0">
+                    <h1 class="display-5 text-primary m-0"><i
+                            class="fas fa-shopping-bag text-secondary me-2"></i>PhoNext</h1>
+                    <!--                         <img src="{% static 'web/img/logo.png' %}" alt="Logo"> -->
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-6 text-center">
+            <div class="position-relative ps-4">
+                <div class="d-flex border rounded-pill">
+                    <input class="form-control border-0 rounded-pill w-100 py-3" type="text"
+                           data-bs-target="#dropdownToggle123" placeholder="Search Looking For?">
+                    <select class="form-select text-dark border-0 border-start rounded-0 p-3" style="width: 200px;">
+                        <option value="All Category">All Category</option>
+                        {% for c in categories %}
+                        <a href="{% url 'filtered_products' cat_name=c.CategoryName %}">
+                            <option value="Pest Control-2">{{c.CategoryName}}</option>
+                        </a>
+                        {% endfor %}
+
+                    </select>
+                    <button type="button" class="btn btn-primary rounded-pill py-3 px-5" style="border: 0;"><i
+                            class="fas fa-search"></i></button>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container-fluid px-5 py-4 d-none d-lg-block">
-        <div class="row gx-0 align-items-center text-center">
-            <div class="col-md-4 col-lg-3 text-center text-lg-start">
-                <div class="d-inline-flex align-items-center">
-                    <a href="" class="navbar-brand p-0">
-                        <h1 class="display-5 text-primary m-0"><i
-                                class="fas fa-shopping-bag text-secondary me-2"></i>PhoneNext</h1>
-                        <!-- <img src="img/logo.png" alt="Logo"> -->
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-6 text-center">
-                <div class="position-relative ps-4">
-                    <div class="d-flex border rounded-pill">
-                        <input class="form-control border-0 rounded-pill w-100 py-3" type="text"
-                            data-bs-target="#dropdownToggle123" placeholder="Search Looking For?">
-                        <select class="form-select text-dark border-0 border-start rounded-0 p-3" style="width: 200px;">
-                            <option value="All Category">All Category</option>
-                            <option value="Pest Control-2">Category 1</option>
-                            <option value="Pest Control-3">Category 2</option>
-                            <option value="Pest Control-4">Category 3</option>
-                            <option value="Pest Control-5">Category 4</option>
-                        </select>
-                        <button type="button" class="btn btn-primary rounded-pill py-3 px-5" style="border: 0;"><i
-                                class="fas fa-search"></i></button>
+        <div class="col-md-4 col-lg-3 text-center text-lg-end">
+            <div class="d-inline-flex align-items-center">
+
+                <a href="#" class="text-muted d-flex align-items-center justify-content-center me-3">
+                    <i class="fas fa-heart"></i></a>
+                <a href="#" class="text-muted d-flex align-items-center justify-content-center"><span
+                        class="rounded-circle btn-md-square border"><i class="fas fa-shopping-cart"></i></span>
+
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle text-muted ms-2" data-bs-toggle="dropdown">
+                            <small><i class="fa fa-user me-2"></i> Account</small>
+                        </a>
+
+                        <div class="dropdown-menu rounded">
+
+                            {% if request.session.username %}
+                            <span class="dropdown-item-text">
+                Hello, {{ request.session.username }}
+            </span>
+                            <div class="dropdown-divider"></div>
+
+                            <a href="{% url 'logout' %}" class="dropdown-item">Log Out</a>
+
+                            {% else %}
+
+                            <a href="{% url 'signin' %}" class="dropdown-item">Login</a>
+                            <a href="{% url 'signup' %}" class="dropdown-item">Sign Up</a>
+
+                            {% endif %}
+
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 text-center text-lg-end">
-                <div class="d-inline-flex align-items-center">
-                    <a href="#" class="text-muted d-flex align-items-center justify-content-center me-3">
-                  </a>
-                    <a href="#" class="text-muted d-flex align-items-center justify-content-center me-3">
-                           <i class="fas fa-heart"></i></a>
-                    <a href="#" class="text-muted d-flex align-items-center justify-content-center"><span
-                            class="rounded-circle btn-md-square border"><i class="fas fa-shopping-cart"></i></span>
-                        <span class="text-dark ms-2">$0.00</span></a>
-                </div>
-            </div>
+             </div>
         </div>
     </div>
-    <!-- Topbar End -->
 
-    <!-- Navbar & Hero Start -->
-    <div class="container-fluid nav-bar p-0">
+</div>
+
+<!-- Topbar End -->
+
+<!-- Navbar & Hero Start -->
+<div class="container-fluid nav-bar p-0">
     <div class="row gx-0 bg-primary px-5 align-items-center">
         <div class="col-lg-3 d-none d-lg-block">
             <nav class="navbar navbar-light position-relative" style="width: 250px;">
@@ -170,7 +147,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-primary ">
                 <a href="" class="navbar-brand d-block d-lg-none">
                     <h1 class="display-5 text-secondary m-0"><i
-                            class="fas fa-shopping-bag text-white me-2"></i>Phonenext</h1>
+                            class="fas fa-shopping-bag text-white me-2"></i>PhoNext</h1>
                     <!-- <img src="img/logo.png" alt="Logo"> -->
                 </a>
                 <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
@@ -182,15 +159,15 @@
                         <a href="{% url 'home' %}" class="nav-item nav-link ">Home</a>
                         <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
                         <a href="{% url 'services' %}" class="nav-item nav-link">Services</a>
-<!--                        <div class="nav-item dropdown">-->
+                        <div class="nav-item dropdown">
                             <a href="{% url 'products' %}" class="nav-item nav-link active">Products</a>
-<!--                            <div class="dropdown-menu m-0">-->
-<!--                                <a href="bestseller.html" class="dropdown-item">Bestseller</a>-->
-<!--                                <a href="cart.html" class="dropdown-item">Cart Page</a>-->
-<!--                                <a href="cheackout.html" class="dropdown-item">Cheackout</a>-->
-<!--                                <a href="404.html" class="dropdown-item">404 Page</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                            <!--                            <div class="dropdown-menu m-0">-->
+                            <!--                                <a href="bestseller.html" class="dropdown-item">Bestseller</a>-->
+                            <!--                                <a href="cart.html" class="dropdown-item">Cart Page</a>-->
+                            <!--                                <a href="cheackout.html" class="dropdown-item">Cheackout</a>-->
+                            <!--                                <a href="404.html" class="dropdown-item">404 Page</a>-->
+                            <!--                            </div>-->
+                        </div>
                         <a href="{% url 'contacts' %}" class="nav-item nav-link me-2">Contact</a>
                         <div class="nav-item dropdown d-block d-lg-none mb-3">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">All Category</a>
@@ -209,14 +186,13 @@
                             </div>
                         </div>
                     </div>
-                    <a href="" class="btn btn-secondary rounded-pill py-2 px-4 px-lg-3 mb-3 mb-md-3 mb-lg-0"><i
-                            class="fa fa-mobile-alt me-2"></i> +0123 456 7890</a>
+
                 </div>
             </nav>
         </div>
     </div>
 </div>
-    <!-- Navbar & Hero End -->
+<!-- Navbar & Hero End -->
 
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
@@ -234,36 +210,7 @@
     <!-- Searvices End -->
 
 
-    <!-- Products Offer Start -->
-    <div class="container-fluid bg-light py-5">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.2s">
-                    <a href="#" class="d-flex align-items-center justify-content-between border bg-white rounded p-4">
-                        <div>
-                            <p class="text-muted mb-3">Find The Best Camera for You!</p>
-                            <h3 class="text-primary">Smart Camera</h3>
-                            <h1 class="display-3 text-secondary mb-0">40% <span
-                                    class="text-primary fw-normal">Off</span></h1>
-                        </div>
-                        <img src="img/product-1.png" class="img-fluid" alt="">
-                    </a>
-                </div>
-                <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.3s">
-                    <a href="#" class="d-flex align-items-center justify-content-between border bg-white rounded p-4">
-                        <div>
-                            <p class="text-muted mb-3">Find The Best Whatches for You!</p>
-                            <h3 class="text-primary">Smart Whatch</h3>
-                            <h1 class="display-3 text-secondary mb-0">20% <span
-                                    class="text-primary fw-normal">Off</span></h1>
-                        </div>
-                        <img src="img/product-2.png" class="img-fluid" alt="">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Products Offer End -->
+
 
 
     <!-- Shop Page Start -->
@@ -320,35 +267,11 @@
                         {% endfor %}
 
                         <div class="d-flex justify-content-center my-4">
-                            <a href="#" class="btn btn-primary px-4 py-3 rounded-pill w-100">Vew More</a>
+                            <a href="#" class="btn btn-primary px-4 py-3 rounded-pill w-100">View More</a>
                         </div>
                     </div>
-                    <a href="#">
-                        <div class="position-relative">
-                            <img src="{% static 'web/img/product-banner-2.jpg' %}" class="img-fluid w-100 rounded" alt="Image">
-                            <div class="text-center position-absolute d-flex flex-column align-items-center justify-content-center rounded p-4"
-                                style="width: 100%; height: 100%; top: 0; right: 0; background: rgba(242, 139, 0, 0.3);">
-                                <h5 class="display-6 text-primary">SALE</h5>
-                                <h4 class="text-secondary">Get UP To 50% Off</h4>
-                                <a href="#" class="btn btn-primary rounded-pill px-4">Shop Now</a>
-                            </div>
-                        </div>
-                    </a>
-                    <div class="product-tags py-4">
-                        <h4 class="mb-3">PRODUCT TAGS</h4>
-                        <div class="product-tags-items bg-light rounded p-3">
-                            <a href="#" class="border rounded py-1 px-2 mb-2">New</a>
-                            <a href="#" class="border rounded py-1 px-2 mb-2">brand</a>
-                            <a href="#" class="border rounded py-1 px-2 mb-2">black</a>
-                            <a href="#" class="border rounded py-1 px-2 mb-2">white</a>
-                            <a href="#" class="border rounded py-1 px-2 mb-2">tablats</a>
-                            <a href="#" class="border rounded py-1 px-2 mb-2">phone</a>
-                            <a href="#" class="border rounded py-1 px-2 mb-2">camera</a>
-                            <a href="#" class="border rounded py-1 px-2 mb-2">drone</a>
-                            <a href="#" class="border rounded py-1 px-2 mb-2">talevision</a>
-                            <a href="#" class="border rounded py-1 px-2 mb-2">slaes</a>
-                        </div>
-                    </div>
+
+
                 </div>
                 <div class="col-lg-9 wow fadeInUp" data-wow-delay="0.1s">
                     <div class="rounded mb-4 position-relative">
@@ -448,18 +371,7 @@
                                 </div>
                                 {% endfor %}
 
-                                <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="pagination d-flex justify-content-center mt-5">
-                                        <a href="#" class="rounded">&laquo;</a>
-                                        <a href="#" class="active rounded">1</a>
-                                        <a href="#" class="rounded">2</a>
-                                        <a href="#" class="rounded">3</a>
-                                        <a href="#" class="rounded">4</a>
-                                        <a href="#" class="rounded">5</a>
-                                        <a href="#" class="rounded">6</a>
-                                        <a href="#" class="rounded">&raquo;</a>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                         <div id="tab-6" class="products tab-pane fade show p-0">
@@ -920,18 +832,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="pagination d-flex justify-content-center mt-5">
-                                        <a href="#" class="rounded">&laquo;</a>
-                                        <a href="#" class="active rounded">1</a>
-                                        <a href="#" class="rounded">2</a>
-                                        <a href="#" class="rounded">3</a>
-                                        <a href="#" class="rounded">4</a>
-                                        <a href="#" class="rounded">5</a>
-                                        <a href="#" class="rounded">6</a>
-                                        <a href="#" class="rounded">&raquo;</a>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -941,41 +842,7 @@
     </div>
     <!-- Shop Page End -->
 
-    <!-- Product Banner Start -->
-    <div class="container-fluid py-5">
-        <div class="container pb-5">
-            <div class="row g-4">
-                <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
-                    <a href="#">
-                        <div class="bg-primary rounded position-relative">
-                            <img src="{% static 'web/img/product-banner.jpg' %}" class="img-fluid w-100 rounded" alt="">
-                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center rounded p-4"
-                                style="background: rgba(255, 255, 255, 0.5);">
-                                <h3 class="display-5 text-primary">EOS Rebel <br> <span>T7i Kit</span></h3>
-                                <p class="fs-4 text-muted">$899.99</p>
-                                <a href="#" class="btn btn-primary rounded-pill align-self-start py-2 px-4">Shop Now</a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.2s">
-                    <a href="#">
-                        <div class="text-center bg-primary rounded position-relative">
-                            <img src="{% static 'web/img/product-banner-2.jpg' %}" class="img-fluid w-100" alt="">
-                            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center rounded p-4"
-                                style="background: rgba(242, 139, 0, 0.5);">
-                                <h2 class="display-2 text-secondary">SALE</h2>
-                                <h4 class="display-5 text-white mb-4">Get UP To 50% Off</h4>
-                                <a href="#" class="btn btn-secondary rounded-pill align-self-center py-2 px-4">Shop
-                                    Now</a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Product Banner End -->
+
 
     <!-- Footer Start -->
     <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">

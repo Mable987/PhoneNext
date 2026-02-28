@@ -43,6 +43,30 @@
                 </div>
               </form>
             </div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% if messages %}
+    {% for m in messages %}
+        {% if m.tags == 'success' %}
+            <script>
+                swal('{{m}}', '', 'success')
+            </script>
+
+        {% elif m.tags == 'warning' %}
+            <script>
+                swal('{{m}}', '', 'warning')
+            </script>
+
+        {% elif m.tags == 'error' %}
+            <script>
+                swal('{{m}}', '', 'error')
+            </script>
+        {% elif m.tags == 'info' %}
+            <script>
+                swal('{{m}}', '', 'info')
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
 </body>
 </html>
 {% endblock %}

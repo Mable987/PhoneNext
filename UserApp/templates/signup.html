@@ -31,29 +31,30 @@
                     <div class="zen-glow"></div>
                 </div>
                 <h1> Sign Up</h1>
-                <p>Welcome to EasyGrocery</p>
+                <p>Welcome to PhoneNext</p>
             </div>
 
-            <form class="harmony-form" id="loginForm" novalidate method="post" action="{% url 'save_signup' %}">
+            <form class="harmony-form" id="loginForm" novalidate method="post" action="{% url 'save_signup' %}" >
                 {% csrf_token %}
                 <div class="organic-field">
                     <div class="field-nature"></div>
-                    <input type="text"  name="username" required autocomplete="username">
+                    <input type="text"  name="username" required autocomplete="username" id="username">
                     <label for="email">Username</label>
+                    <span class="error-message" id="usernameError"></span>
                     <div class="growth-indicator">
                         <div class="leaf-sprout"></div>
                     </div>
 <!--                    <span class="gentle-error" id="emailError"></span>-->
                 </div>
-                 <div class="organic-field">
-                    <div class="field-nature"></div>
-                    <input type="email" id="email" name="email" required autocomplete="email">
-                    <label for="email">Email</label>
-                    <div class="growth-indicator">
-                        <div class="leaf-sprout"></div>
-                    </div>
-<!--                    <span class="gentle-error" id="emailError"></span>-->
-                </div>
+               <div class="organic-field">
+    <div class="field-nature"></div>
+    <input type="email" id="email" name="email" required autocomplete="email">
+    <label for="email">Email</label>
+    <span class="error-message" id="emailError"></span>
+    <div class="growth-indicator">
+        <div class="leaf-sprout"></div>
+    </div>
+</div>
 
                 <div class="organic-field">
                     <div class="field-nature"></div>
@@ -67,7 +68,7 @@
                             <path d="M3 3l14 14M8.5 8.5a2 2 0 002.83 2.83m-.83-4.83a4 4 0 014 4M10 6C6 6 3 9 2 12c.5 1.5 2 3.5 4 4.5M10 14c4 0 7-3 8-6-.5-1.5-2-3.5-4-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
-<!--                    <span class="gentle-error" id="passwordError"></span>-->
+                   <span class="error-message" id="passwordError"></span>
                 </div>
                 <div class="organic-field">
                     <div class="field-nature"></div>
@@ -81,7 +82,7 @@
                             <path d="M3 3l14 14M8.5 8.5a2 2 0 002.83 2.83m-.83-4.83a4 4 0 014 4M10 6C6 6 3 9 2 12c.5 1.5 2 3.5 4 4.5M10 14c4 0 7-3 8-6-.5-1.5-2-3.5-4-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
-                    <span class="gentle-error" id="passwordError"></span>
+                    <span class="gentle-error" id="confirm_passwordError"></span>
                 </div>
 
 
@@ -133,6 +134,30 @@
     </div>
 
     <script src="../../shared/js/form-utils.js"></script>
-<!--    <script src="{% static 'Login/js/script.js' %}"></script>-->
+    <script src="{% static 'Login/js/script.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% if messages %}
+    {% for m in messages %}
+        {% if m.tags == 'success' %}
+            <script>
+                swal('{{m}}', '', 'success')
+            </script>
+
+        {% elif m.tags == 'warning' %}
+            <script>
+                swal('{{m}}', '', 'warning')
+            </script>
+
+        {% elif m.tags == 'error' %}
+            <script>
+                swal('{{m}}', '', 'error')
+            </script>
+        {% elif m.tags == 'info' %}
+            <script>
+                swal('{{m}}', '', 'info')
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
 </body>
 </html>

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.utils.datastructures import MultiValueDictKeyError
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
 
 from AdminApp.models import CategoryDb, ProductDb
 from UserApp.models import ContactDb
@@ -24,6 +25,7 @@ def save_category(request):
         categoryimage = request.FILES.get('categoryimage')
         obj  = CategoryDb(CategoryName=categoryname, Description=description, CategoryImage=categoryimage)
         obj.save()
+        messages.success(request, 'Category Added Successfully')
         return redirect(add_category)
 def edit_category(request,category_id):
     data = CategoryDb.objects.get(id=category_id)
@@ -71,6 +73,7 @@ def save_products(request):
         productimage = request.FILES.get('productimage')
         obj = ProductDb(Category_Name=categoryname,ProductName=productname, Description=description, Price=price, ProductImage=productimage)
         obj.save()
+        messages.success(request, 'Product Added Successfully')
         return redirect(add_products)
 def edit_products(request,product_id):
     data = ProductDb.objects.get(id=product_id)
