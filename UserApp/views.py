@@ -12,14 +12,16 @@ def Home(request):
 
     return render(request,'Home.html',{'categories':categories,'latest_products':latest_products})
 def about(request):
-    return render(request,'about.html')
+    categories = CategoryDb.objects.all()
+    return render(request,'about.html',{'categories':categories})
 def products(request):
     products = ProductDb.objects.all()
     categories = CategoryDb.objects.all()
     featured_products = ProductDb.objects.all().order_by('-id')[:3]
     return render(request,'products.html',{'products':products,'categories':categories,'featured_products':featured_products})
 def services(request):
-    return render(request,'services.html')
+    categories = CategoryDb.objects.all()
+    return render(request,'services.html',{'categories':categories})
 def contacts(request):
     return render(request,'contact_page.html')
 def filtered_products(request,cat_name):
@@ -34,7 +36,8 @@ def single_product(request,product_id):
     related_products = ProductDb.objects.all()
     return render(request,'single_item.html',{'single_product':single_product,'categories':categories,'related_products':related_products})
 def contact_page(request):
-    return render(request,'contact_page.html')
+    categories = CategoryDb.objects.all()
+    return render(request,'contact_page.html',{'categories':categories})
 def save_contacts(request):
     if request.method == 'POST':
         name = request.POST.get('name')
@@ -89,16 +92,30 @@ def user_logout(request):
     del request.session['password']
     return redirect('home')
 def cart(request):
-    return render(request,'cart.html')
-def add_to_cart(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        productname = request.POST.get('productname')
-        quantity = request.POST.get('quantity')
-        price = request.POST.get('price')
-        totalprice = request.POST.get('totalprice')
-        pro = ProductDb.objects.filter(ProductName=productname).first()
-        img = pro.ProductImage if pro else None
-        obj = CratDb(UserName=username,ProductName=productname,Quantity=quantity,Price=price,TotalPrice=totalprice,ProductImage=img)
-        obj.save()
-        return redirect('cart')
+    if 'username' not in request.session:
+        return redirect('signin')
+    cart = CratDb.objects.filter(UserName=request.session['username'])
+    return render(request,'cart.html',{'cart':cart})
+def add_to_cart(request, product_id):
+    if 'username' not in request.session:
+        return redirect('signin')
+
+    product = ProductDb.objects.get(id=product_id)
+
+    CratDb.objects.create(
+        UserName=request.session['username'],
+        ProductName=product.ProductName,
+        Quantity=1,
+        Price=product.Price,
+        TotalPrice=product.Price,
+        ProductImage=product.ProductImage
+    )
+
+    return redirect('cart')
+def delete_from_cart(request, product_id):
+    delete_cart = CratDb.objects.get(id=product_id)
+    delete_cart.delete()
+    return redirect('cart')
+def checkout(request):
+    return render(request,'checkout.html')
+
