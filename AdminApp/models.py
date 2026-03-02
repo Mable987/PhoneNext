@@ -13,6 +13,14 @@ class ProductDb(models.Model):
     ProductName = models.CharField(max_length=100, unique=True)
     Description = models.TextField()
     Price = models.FloatField()
-    ProductImage = models.ImageField(upload_to='products')
+    ProductImage = models.ImageField(upload_to='products', null=True, blank=True)
+
     def __str__(self):
         return self.ProductName
+
+class ProductImageDb(models.Model):
+    product = models.ForeignKey(ProductDb, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField(upload_to='products')
+
+    def __str__(self):
+        return self.product.ProductName
