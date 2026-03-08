@@ -45,8 +45,7 @@
     <!-- Spinner End -->
 
 
-<!-- Topbar Start -->
-
+    <!-- Topbar Start -->
 <div class="container-fluid px-5 py-4 d-none d-lg-block">
     <div class="row gx-0 align-items-center text-center">
         <div class="col-md-4 col-lg-3 text-center text-lg-start">
@@ -110,7 +109,7 @@
 
                         </div>
                     </div>
-            </div>
+             </div>
         </div>
     </div>
 
@@ -157,7 +156,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="{% url 'home' %}" class="nav-item nav-link ">Home</a>
+                        <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
                         <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
                         <a href="{% url 'services' %}" class="nav-item nav-link">Services</a>
                         <div class="nav-item dropdown">
@@ -197,207 +196,42 @@
 
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6 wow fadeInUp" data-wow-delay="0.1s">Cheackout Page</h1>
+        <h1 class="text-center text-white display-6 wow fadeInUp" data-wow-delay="0.1s">404 Page</h1>
         <ol class="breadcrumb justify-content-center mb-0 wow fadeInUp" data-wow-delay="0.3s">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Cheackout</li>
+            <li class="breadcrumb-item active text-white">404</li>
         </ol>
     </div>
     <!-- Single Page Header End -->
 
-    <!-- Searvices Start -->
-    <!-- Searvices End -->
+<!-- Payment Section Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5 text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
 
+                <i class="fas fa-credit-card display-1 text-secondary mb-4"></i>
 
-    <!-- Checkout Page Start -->
-    <div class="container-fluid bg-light overflow-hidden py-5">
-        <div class="container py-5">
-            <h1 class="mb-4 wow fadeInUp" data-wow-delay="0.1s">Billing details</h1>
-            <form action="{% url 'save_checkout' %}" method="post">
-                {% csrf_token %}
-                <div class="row g-5">
-                    <div class="col-md-12 col-lg-6 col-xl-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="row">
-                            <div class="col-md-12 col-lg-6">
-                                <div class="form-item w-100">
-                                    <label class="form-label my-3">First Name<sup>*</sup></label>
-                                    <input type="text" class="form-control" name="firstname">
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-lg-6">
-                                <div class="form-item w-100">
-                                    <label class="form-label my-3">Last Name<sup>*</sup></label>
-                                    <input type="text" class="form-control" name="lastname">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Address <sup>*</sup></label>
-                            <input type="text" class="form-control" placeholder="House Number Street Name" name="address">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Town/City<sup>*</sup></label>
-                            <input type="text" class="form-control" name="place">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">State<sup>*</sup></label>
-                            <input type="text" class="form-control" name="state">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Pincode<sup>*</sup></label>
-                            <input type="text" class="form-control" name="pincode">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Mobile<sup>*</sup></label>
-                            <input type="tel" class="form-control" name="mobile">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Email Address<sup>*</sup></label>
-                            <input type="email" class="form-control" name="email">
-                        </div>
-                        <div class="form-check my-3">
-                            <input type="checkbox" class="form-check-input" id="Account-1" name="Accounts"
-                                value="Accounts">
-                            <label class="form-check-label" for="Account-1">Create an account?</label>
-                        </div>
-                        <hr>
-                        <div class="form-check my-3">
-                            <input class="form-check-input" type="checkbox" id="Address-1" name="Address"
-                                value="Address">
-                            <label class="form-check-label" for="Address-1">Ship to a different address?</label>
-                        </div>
-                        <div class="form-item">
-                            <textarea name="text" class="form-control" spellcheck="false" cols="30" rows="11"
-                                placeholder="Oreder Notes (Optional)"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-12 col-lg-6 col-xl-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr class="text-center">
-                                        <th scope="col" class="text-start">Name</th>
-<!--                                        <th scope="col">Model</th>-->
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                {% for i in checkout_cart %}
-                                    <tr class="text-center">
-                                        <th scope="row" class="text-start py-4">
-                                            {{ i.ProductName}}
-                                        </th>
-<!--                                        <td class="py-4">G2356</td>-->
-                                        <td class="py-4">Rs.{{i.Price}}</td>
-                                        <td class="py-4 text-center">{{i.Quantity}}</td>
-                                        <td class="py-4">Rs.{{i.TotalPrice}}</td>
-                                    </tr>
-                                {% endfor %}
-                                    <tr>
-                                        <th scope="row">
-                                        </th>
-                                        <td class="py-4"></td>
-                                        <td class="py-4"></td>
-                                        <td class="py-4">
-                                            <p class="mb-0 text-dark py-2">Subtotal</p>
-                                        </td>
-                                        <td class="py-4">
-                                            <div class="py-2 text-center border-bottom border-top">
-                                                <p class="mb-0 text-dark">Rs.{{sub_total}}</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                        </th>
-                                        <td class="py-4">
-                                            <p class="mb-0 text-dark py-4">Shipping</p>
-                                        </td>
-                                        <td colspan="3" class="py-4">
-                                            <div class="form-check text-start">
+                <h1 class="mb-4">Complete Your Payment</h1>
 
-                                            </div>
-                                            <div class="form-check text-start">
-                                                <input type="checkbox" class="form-check-input bg-primary border-0"
-                                                    id="Shipping-2" name="Shipping-1" value="Shipping">
-                                                <label class="form-check-label" for="Shipping-2">Flat rate:
-                                                    Rs.{{delivery}}</label>
-                                            </div>
-                                            <div class="form-check text-start">
+                <p class="mb-4">
+                    Please click the button below to securely complete your order.
+                </p>
 
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                        </th>
-                                        <td class="py-4">
-                                            <p class="mb-0 text-dark text-uppercase py-2">TOTAL</p>
-                                        </td>
-                                        <td class="py-4"></td>
-                                        <td class="py-4"></td>
-                                        <td class="py-4">
-                                            <div class="py-2 text-center border-bottom border-top">
-                                                <p class="mb-0 text-dark">Rs.{{grand_total}}</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row g-0 text-center align-items-center justify-content-center border-bottom py-2">
-                            <div class="col-12">
-                                <div class="form-check text-start my-2">
-                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Transfer-1"
-                                        name="Transfer" value="Transfer">
-                                    <label class="form-check-label" for="Transfer-1">Direct Bank Transfer</label>
-                                </div>
-                                <p class="text-start text-dark">Make your payment directly into our bank account. Please
-                                    use your Order ID as the payment reference. Your order will not be shipped until the
-                                    funds have cleared in our account.</p>
-                            </div>
-                        </div>
-                        <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-2">
-                            <div class="col-12">
-                                <div class="form-check text-start my-2">
-                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Payments-1"
-                                        name="Payments" value="Payments">
-                                    <label class="form-check-label" for="Payments-1">Check Payments</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-2">
-                            <div class="col-12">
-                                <div class="form-check text-start my-2">
-                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Delivery-1"
-                                        name="Delivery" value="Delivery">
-                                    <label class="form-check-label" for="Delivery-1">Cash On Delivery</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-2">
-                            <div class="col-12">
-                                <div class="form-check text-start my-2">
-                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Paypal-1"
-                                        name="Paypal" value="Paypal">
-                                    <label class="form-check-label" for="Paypal-1">Paypal</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                            <button type="submit"
-                                class="btn btn-primary border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place
-                                Order</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                <form method="POST" action="#">
+                    {% csrf_token %}
+                    <button type="submit"
+                        class="btn btn-primary rounded-pill py-3 px-5">
+                        Proceed to Payment
+                    </button>
+                </form>
+
+            </div>
         </div>
     </div>
-    <!-- Checkout Page End -->
+</div>
+<!-- Payment Section End -->
 
     <!-- Footer Start -->
     <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
@@ -546,6 +380,16 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'web/js/main.js' %}"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"
+    data-key = "rzp_test_0ib0jPwwZ7I1lT"
+    data-amount = "{{pay_str}}"
+    data-currency = "INR"
+    data-order_id = "{{payment.order_id}}"
+    data-name = "EasyGrocery"
+    data-description = "Easy Grocery online payment"
+    data-prefil.name = "EasyGrocery"
+    data-theme.color = "#F28C00"
+></script>
 </body>
 
 </html>

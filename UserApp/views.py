@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.template.context_processors import request
 from django.contrib import messages
 from AdminApp.models import *
-from UserApp.models import ContactDb, RegistrationDb, CratDb
+from UserApp.models import *
 from django.db.models import Q
+import razorpay
 
 
 # Create your views here.
@@ -103,7 +104,7 @@ def user_logout(request):
 def cart(request):
     if 'username' not in request.session:
         return redirect('signin')
-    cart = CratDb.objects.filter(UserName=request.session['username'])
+    cart = CartDb.objects.filter(UserName=request.session['username'])
 
     sub_total = sum(i.TotalPrice for i in cart)
     delivery = 0 if sub_total >= 20000 else 100
@@ -120,7 +121,7 @@ def add_to_cart(request, product_id):
 
     product = ProductDb.objects.get(id=product_id)
 
-    CratDb.objects.create(
+    CartDb.objects.create(
         UserName=request.session['username'],
         ProductName=product.ProductName,
         Quantity=1,
@@ -129,14 +130,14 @@ def add_to_cart(request, product_id):
         ProductImage=product.ProductImage
     )
 
-    return redirect('cart')
+    return redirect('checkout')
 def delete_from_cart(request, product_id):
-    delete_cart = CratDb.objects.get(id=product_id)
+    delete_cart = CartDb.objects.get(id=product_id)
     delete_cart.delete()
     return redirect('cart')
 def update_cart(request, product_id, action):
 
-    item = CratDb.objects.get(id=product_id)
+    item = CartDb.objects.get(id=product_id)
 
     if action == 'increase':
         item.Quantity += 1
@@ -151,7 +152,47 @@ def update_cart(request, product_id, action):
 
     return redirect('cart')
 def checkout(request):
-    return render(request,'checkout.html')
+    checkout_cart = CartDb.objects.filter(UserName=request.session['username'])
+    sub_total = sum(i.TotalPrice for i in checkout_cart)
+    delivery = 0 if sub_total >= 20000 else 100
+    grand_total = sub_total + delivery
+    return render(request,'checkout.html',
+                  {'checkout_cart': checkout_cart,'sub_total': sub_total,
+                   'delivery': delivery,'grand_total': grand_total})
+def save_checkout(request):
+    if request.method == 'POST':
+
+        firstname = request.POST.get('firstname')
+        lastname = request.POST.get('lastname')
+        email = request.POST.get('email')
+        place = request.POST.get('place')
+        address = request.POST.get('address')
+        mobile = request.POST.get('mobile')
+        state = request.POST.get('state')
+        pincode = request.POST.get('pincode')
+
+        username = request.session.get('username')
+
+        cart_items = CartDb.objects.filter(UserName=username)
+        sub_total = sum(i.TotalPrice for i in cart_items)
+        delivery = 0 if sub_total >= 20000 else 100
+        grand_total = sub_total + delivery
+
+
+
+        OrderDb.objects.create(
+            FirstName=firstname,
+            LastName=lastname,
+            Email=email,
+            Place=place,
+            Address=address,
+            Mobile=mobile,
+            State=state,
+            PinCode=pincode,
+            TotalPrice=grand_total
+        )
+
+        return redirect(payment)
 
 def search_products(request):
     query = request.GET.get('q')
@@ -171,3 +212,23 @@ def search_products(request):
         'query': query,
         'categories': categories
     })
+def payment(request):
+    categories = CategoryDb.objects.all()
+    cart_total = 0
+    username = request.session['username']
+    if username:
+        cart_total = CartDb.objects.filter(UserName=username).count()
+        customer = OrderDb.objects.order_by('-id').first()
+        if not customer:
+            return redirect('checkout')
+
+        if not customer.TotalPrice:
+            return redirect('checkout')
+        pay = customer.TotalPrice or 0
+        amount = int(pay * 100)
+        pay_str =str(amount)
+        if request.method == 'POST':
+            order_currency = "INR"
+            client = razorpay.Client(auth=(' rzp_test_0ib0jPwwZ7I1lT','VjHNO5zKeKxz8PYe7VnzwxMR'))
+            payment = client.order.create({'amount': amount, 'currency': order_currency})
+    return render(request, 'payment.html',{'categories': categories, 'cart_total': cart_total,'pay_str':pay_str})
